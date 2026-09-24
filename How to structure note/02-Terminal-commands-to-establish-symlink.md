@@ -15,4 +15,7 @@ ln -s ~/NOTES-cms- ./notes
 ./notes is the notes folder you created at the root of the repo you are working on.( if not created after step 2 create one )
 
 4. Verify it worked
-Run ls ./notes — you should immediately see your How to structure note folder! 
+Run ls ./notes — you should immediately see your How to structure note folder!
+
+
+

@@ -36,3 +36,5 @@ Inside the markdown body, structure the chapter with these clean sections:
 6. **Summary Checklist**: 3-4 bullet recap checklist.
 
 Write in clear, digestible language. Create the files directly in `notes/<Course Name>/`.
+
+
