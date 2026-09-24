@@ -1,0 +1,33 @@
+name: Auto-Sync to CMS Website
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows you to manually click "Run workflow" in GitHub UI
+
+jobs:
+  ping-cms:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Sync Signal to CMS Backend
+        run: |
+          echo "Pinging CMS at: ${{ secrets.CMS_URL }}/api/v1/admin/sync-markdown"
+          
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "${{ secrets.CMS_URL }}/api/v1/admin/sync-markdown" \
+            -H "Content-Type: application/json" \
+            -H "x-admin-key: ${{ secrets.ADMIN_SECRET }}" \
+            -H "Bypass-Tunnel-Reminder: true")
+            
+          HTTP_BODY=$(echo "$RESPONSE" | sed '$d')
+          HTTP_STATUS=$(echo "$RESPONSE" | tail -n1)
+          
+          echo "Response Body: $HTTP_BODY"
+          echo "HTTP Status Code: $HTTP_STATUS"
+          
+          if [ "$HTTP_STATUS" -ne 200 ]; then
+            echo "::error::Failed to sync! HTTP Status: $HTTP_STATUS"
+            exit 1
+          fi
+          
+          echo "✅ CMS sync completed successfully!"
