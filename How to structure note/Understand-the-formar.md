@@ -1,38 +1,23 @@
 ---
-title: "Handling CORS with Cookies & Credentials in Express"
-date: 2026-09-24
-tags:
-  - backend
-  - express
-  - security
-  - cors
-summary: "Why fetch() requests with cookies fail with CORS errors and how to configure cors origin + credentials properly."
+courseTitle: "How to Structure Notes"
+courseDescription: "A guide to writing clean, structured technical notes and documentation."
+tag: "Documentation"
+title: "Understanding the Format"
+order: 1
 ---
 
-# Handling CORS with Cookies & Credentials in Express
+# Understanding the Format
 
-## 1. The Problem
-When the frontend (`http://localhost:5173`) sends an authenticated API request with credentials (`include: 'credentials'`) to the backend (`http://localhost:3000`), the browser blocks the response with:
+## 1. Overview
+In this chapter, you will learn the standard format for documenting technical concepts and code so they render cleanly on GitHub and inside the CMS.
 
-> `Access to fetch at '...' has been blocked by CORS policy: The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.`
+## 2. The Core Layout
+Every note consists of:
+1. **Frontmatter (top block)**: Metadata for the course, chapter title, and tags.
+2. **Problem & Context**: Why this concept exists.
+3. **The Solution**: How to implement it with code examples.
+4. **Key Takeaways**: Quick bullet points.
 
-## 2. The Root Cause
-By default, standard CORS setups often use wildcard origins (`*`). But browsers forbid wildcards whenever cookies or authorization headers are transmitted for security reasons.
-
-## 3. The Solution
-
-### Backend Configuration (`Express`)
-Specify the exact frontend origin and enable `credentials: true`:
-
-```ts
-import cors from 'cors';
-import express from 'express';
-
-const app = express();
-
-app.use(
-  cors({
-    origin: 'http://localhost:5173', // Exact origin, NEVER '*' with credentials
-    credentials: true,               // Allows browser cookies to pass
-  })
-);
+## 3. Best Practices
+- Keep file names lowercase with hyphens: `01-understand-the-format.md`.
+- Always include the `order` number in the frontmatter.
